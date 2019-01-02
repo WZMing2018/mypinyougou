@@ -8,8 +8,6 @@
     <artifactId>mypinyougou</artifactId>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>dubbox_provider</module>
-        <module>dubbox_consumer</module>
         <module>mypinyougou_commom</module>
         <module>mypinyougou_pojo</module>
         <module>mypinyougou_dao</module>
