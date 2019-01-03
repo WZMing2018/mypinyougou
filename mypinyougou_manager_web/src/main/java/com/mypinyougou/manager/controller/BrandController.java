@@ -45,8 +45,8 @@ public class BrandController {
         return tbBrandService.findOne(id);
     }
 
-    @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids) {
+    @RequestMapping("/delete/{ids}")
+    public Result delete(@PathVariable("ids") Long[] ids) {
         try {
             tbBrandService.delete(ids);
             return new Result(true, "操作成功!");

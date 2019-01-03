@@ -78,7 +78,7 @@
 
             //批量删除
             $scope.delete = function () {
-                $http.post('../brand/delete', $scope.selectIDs).success(function (res) {
+                $http.get('../brand/delete/' + $scope.selectIDs).success(function (res) {
                     alert(res.message);
                     if(res.success) {
                         //重新查询,刷界面
