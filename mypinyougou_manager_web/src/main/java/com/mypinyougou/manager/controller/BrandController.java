@@ -45,4 +45,15 @@ public class BrandController {
         return tbBrandService.findOne(id);
     }
 
+    @RequestMapping("/delete")
+    public Result delete(@RequestBody Long[] ids) {
+        try {
+            tbBrandService.delete(ids);
+            return new Result(true, "操作成功!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, "操作失败!");
+        }
+    }
+
 }

@@ -64,6 +64,31 @@
                 });
             };
 
+            //初始化选中的id的集合
+            $scope.selectIDs = [];
+            //更新复选
+            $scope.updateSelection = function ($event, id) {
+                if ($event.target.checked) {//如果是被选中,添加
+                    $scope.selectIDs.push(id);
+                } else {//否则,删除
+                    var idx = $scope.selectIDs.indexOf(id);
+                    $scope.selectIDs.splice(idx, 1);//删除
+                }
+            };
+
+            //批量删除
+            $scope.delete = function () {
+                $http.post('../brand/delete', $scope.selectIDs).success(function (res) {
+                    alert(res.message);
+                    if(res.success) {
+                        //重新查询,刷界面
+                        $scope.reloadList();
+                        //重新初始化
+                        $scope.selectIDs = [];
+                    }
+                });
+            };
+
         });
 
 	</script>
@@ -86,7 +111,7 @@
                                 <div class="form-group form-inline">
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-default" title="新建" data-toggle="modal" data-target="#editModal" ng-click="brand={}"><i class="fa fa-file-o"></i> 新建</button>
-                                        <button type="button" class="btn btn-default" title="删除" ><i class="fa fa-trash-o"></i> 删除</button>           
+                                        <button type="button" class="btn btn-default" ng-click="delete()" title="删除" ><i class="fa fa-trash-o"></i> 删除</button>
                                         <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新</button>
                                     </div>
                                 </div>
@@ -113,7 +138,7 @@
 			                      </thead>
 			                      <tbody>
 			                          <tr ng-repeat="entity in list">
-			                              <td><input  type="checkbox" ></td>			                              
+			                              <td><input  type="checkbox" ng-click="updateSelection($event,entity.id)"></td>
 				                          <td>{{entity.id}}</td>
 									      <td>{{entity.name}}</td>
 		                                  <td>{{entity.firstChar}}</td>

@@ -13,4 +13,6 @@ public interface TbBrandMapper {
     TbBrand findOne(Long id);
 
     void update(TbBrand tbBrand);
+
+    void delete(Long id);
 }

@@ -44,4 +44,11 @@ public class TbBrandServiceImpl implements TbBrandService {
     public TbBrand findOne(Long id) {
         return tbBrandMapper.findOne(id);
     }
+
+    @Override
+    public void delete(Long[] ids) {
+        for (Long id : ids) {
+            tbBrandMapper.delete(id);
+        }
+    }
 }

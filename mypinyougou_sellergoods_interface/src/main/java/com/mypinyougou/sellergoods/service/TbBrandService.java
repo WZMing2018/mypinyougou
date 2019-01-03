@@ -13,4 +13,6 @@ public interface TbBrandService {
     void add(TbBrand tbBrand);
 
     TbBrand findOne(Long id);
+
+    void delete(Long[] ids);
 }
