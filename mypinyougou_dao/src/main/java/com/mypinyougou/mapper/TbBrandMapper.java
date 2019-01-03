@@ -1,18 +1,31 @@
 package com.mypinyougou.mapper;
 
 import com.mypinyougou.pojo.TbBrand;
+import com.mypinyougou.pojo.TbBrandExample;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 public interface TbBrandMapper {
+    int countByExample(TbBrandExample example);
 
-    public List<TbBrand> findAll();
+    int deleteByExample(TbBrandExample example);
 
-    void add(TbBrand tbBrand);
+    int deleteByPrimaryKey(Long id);
 
-    TbBrand findOne(Long id);
+    int insert(TbBrand record);
 
-    void update(TbBrand tbBrand);
+    int insertSelective(TbBrand record);
 
-    void delete(Long id);
+    List<TbBrand> selectByExample(TbBrandExample example);
+
+    TbBrand selectByPrimaryKey(Long id);
+
+    int updateByExampleSelective(@Param("record") TbBrand record, @Param("example") TbBrandExample example);
+
+    int updateByExample(@Param("record") TbBrand record, @Param("example") TbBrandExample example);
+
+    int updateByPrimaryKeySelective(TbBrand record);
+
+    int updateByPrimaryKey(TbBrand record);
 }

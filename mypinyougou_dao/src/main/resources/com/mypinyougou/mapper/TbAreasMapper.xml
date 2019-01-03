@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mypinyougou.mapper.TbBrandMapper">
-  <resultMap id="BaseResultMap" type="com.mypinyougou.pojo.TbBrand">
+<mapper namespace="com.mypinyougou.mapper.TbAreasMapper">
+  <resultMap id="BaseResultMap" type="com.mypinyougou.pojo.TbAreas">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="first_char" jdbcType="VARCHAR" property="firstChar" />
+    <result column="areaid" jdbcType="VARCHAR" property="areaid" />
+    <result column="area" jdbcType="VARCHAR" property="area" />
+    <result column="cityid" jdbcType="VARCHAR" property="cityid" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -65,15 +66,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, first_char
+    id, areaid, area, cityid
   </sql>
-  <select id="selectByExample" parameterType="com.mypinyougou.pojo.TbBrandExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.mypinyougou.pojo.TbAreasExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from tb_brand
+    from tb_areas
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -84,67 +85,76 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from tb_brand
+    from tb_areas
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from tb_brand
+    delete from tb_areas
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.mypinyougou.pojo.TbBrandExample">
-    delete from tb_brand
+  <delete id="deleteByExample" parameterType="com.mypinyougou.pojo.TbAreasExample">
+    delete from tb_areas
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.mypinyougou.pojo.TbBrand">
-    insert into tb_brand (id, name, first_char
-      )
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{firstChar,jdbcType=VARCHAR}
-      )
+  <insert id="insert" parameterType="com.mypinyougou.pojo.TbAreas">
+    insert into tb_areas (id, areaid, area, 
+      cityid)
+    values (#{id,jdbcType=BIGINT}, #{areaid,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, 
+      #{cityid,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.mypinyougou.pojo.TbBrand">
-    insert into tb_brand
+  <insert id="insertSelective" parameterType="com.mypinyougou.pojo.TbAreas">
+    insert into tb_areas
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
-      <if test="name != null">
-        name,
+      <if test="areaid != null">
+        areaid,
       </if>
-      <if test="firstChar != null">
-        first_char,
+      <if test="area != null">
+        area,
+      </if>
+      <if test="cityid != null">
+        cityid,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
+      <if test="areaid != null">
+        #{areaid,jdbcType=VARCHAR},
       </if>
-      <if test="firstChar != null">
-        #{firstChar,jdbcType=VARCHAR},
+      <if test="area != null">
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="cityid != null">
+        #{cityid,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.mypinyougou.pojo.TbBrandExample" resultType="java.lang.Integer">
-    select count(*) from tb_brand
+  <select id="countByExample" parameterType="com.mypinyougou.pojo.TbAreasExample" resultType="java.lang.Integer">
+    select count(*) from tb_areas
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update tb_brand
+    update tb_areas
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.name != null">
-        name = #{record.name,jdbcType=VARCHAR},
+      <if test="record.areaid != null">
+        areaid = #{record.areaid,jdbcType=VARCHAR},
       </if>
-      <if test="record.firstChar != null">
-        first_char = #{record.firstChar,jdbcType=VARCHAR},
+      <if test="record.area != null">
+        area = #{record.area,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cityid != null">
+        cityid = #{record.cityid,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -152,30 +162,35 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update tb_brand
+    update tb_areas
     set id = #{record.id,jdbcType=BIGINT},
-      name = #{record.name,jdbcType=VARCHAR},
-      first_char = #{record.firstChar,jdbcType=VARCHAR}
+      areaid = #{record.areaid,jdbcType=VARCHAR},
+      area = #{record.area,jdbcType=VARCHAR},
+      cityid = #{record.cityid,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.mypinyougou.pojo.TbBrand">
-    update tb_brand
+  <update id="updateByPrimaryKeySelective" parameterType="com.mypinyougou.pojo.TbAreas">
+    update tb_areas
     <set>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
+      <if test="areaid != null">
+        areaid = #{areaid,jdbcType=VARCHAR},
       </if>
-      <if test="firstChar != null">
-        first_char = #{firstChar,jdbcType=VARCHAR},
+      <if test="area != null">
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="cityid != null">
+        cityid = #{cityid,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.mypinyougou.pojo.TbBrand">
-    update tb_brand
-    set name = #{name,jdbcType=VARCHAR},
-      first_char = #{firstChar,jdbcType=VARCHAR}
+  <update id="updateByPrimaryKey" parameterType="com.mypinyougou.pojo.TbAreas">
+    update tb_areas
+    set areaid = #{areaid,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      cityid = #{cityid,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>
