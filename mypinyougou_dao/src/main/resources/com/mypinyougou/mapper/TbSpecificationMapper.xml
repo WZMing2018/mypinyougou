@@ -96,7 +96,11 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.mypinyougou.pojo.TbSpecification">
+  <insert id="insert" parameterType="com.mypinyougou.pojo.TbSpecification" >
+    /*返回主键*/
+    <selectKey resultType="long" keyProperty="id" order="AFTER">
+      select LAST_INSERT_ID()
+    </selectKey>
     insert into tb_specification (id, spec_name)
     values (#{id,jdbcType=BIGINT}, #{specName,jdbcType=VARCHAR})
   </insert>
