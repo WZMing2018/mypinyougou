@@ -14,86 +14,11 @@
 	<script src="../plugins/angularjs/angular.min.js"></script>
     <link rel="stylesheet" href="../plugins/angularjs/pagination.css">
     <script src="../plugins/angularjs/pagination.js"></script>
+    <script src="../js/base_pagination.js"></script>
+    <script src="../js/service/brandService.js"></script>
+	<script src="../js/controller/baseController.js"></script>
+    <script src="../js/controller/brandController.js"></script>
 
-    <script>
-		//定义模块
-		var app = angular.module('pyg', ['pagination']);
-		//定义控制器
-        app.controller('brandController', function ($scope, $http) {
-            // 分页控件配置
-            // currentPage：当前页；totalItems：总记录数；itemsPerPage：每页记录数；perPageOptions：分页选项；onChange：当页码变更后自动触发的方法
-            $scope.paginationConf = {
-                currentPage: 1,
-                totalItems: 10,
-                itemsPerPage: 10,
-                perPageOptions: [10, 20, 30, 40, 50],
-                onChange: function () {
-                    $scope.reloadList();//重新加载
-                }
-            };
-
-            //重新加载列表 数据
-            $scope.reloadList = function () {
-                //切换页码
-                $scope.findPage($scope.paginationConf.currentPage, $scope.paginationConf.itemsPerPage);
-            };
-
-            $scope.findPage = function (page, size) {
-                $http.get('../brand/findPage/' + page + '/' + size).success(
-                    function (response) {
-                        $scope.list = response.rows;
-                        $scope.paginationConf.totalItems = response.total;//更新总记录数
-                    }
-                );
-            };
-
-            $scope.save = function () {
-                $http.post('../brand/add', $scope.brand).success(function (res) {
-                    if(res.success) {
-						//重新查询,刷界面
-                        $scope.reloadList();
-                    } else {
-                        alert(res.message);
-                    }
-                });
-            };
-
-            $scope.edit = function (id) {
-                $http.get('../brand/edit/' + id).success(function (res) {
-                    $scope.brand = res;
-                });
-            };
-
-            //初始化选中的id的集合
-            $scope.selectIDs = [];
-            //更新复选
-            $scope.updateSelection = function ($event, id) {
-                if ($event.target.checked) {//如果是被选中,添加
-                    $scope.selectIDs.push(id);
-                } else {//否则,删除
-                    var idx = $scope.selectIDs.indexOf(id);
-                    $scope.selectIDs.splice(idx, 1);//删除
-                }
-            };
-
-            //批量删除
-            $scope.delete = function () {
-                $http.get('../brand/delete/' + $scope.selectIDs).success(function (res) {
-                    alert(res.message);
-                    if(res.success) {
-                        //重新查询,刷界面
-                        $scope.reloadList();
-                        //重新初始化
-                        $scope.selectIDs = [];
-                    }
-                });
-            };
-
-        });
-
-	</script>
-
-    
 </head>
 <body class="hold-transition skin-red sidebar-mini" ng-app="pyg" ng-controller="brandController">
   <!-- .box-body -->
