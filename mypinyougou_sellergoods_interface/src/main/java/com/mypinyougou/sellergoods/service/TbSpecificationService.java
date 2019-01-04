@@ -13,7 +13,7 @@ public interface TbSpecificationService {
 
     void add(Specification specification);
 
-    TbSpecification findOne(Long id);
+    Specification findOne(Long id);
 
     void delete(Long[] ids);
 }

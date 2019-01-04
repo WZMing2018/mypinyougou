@@ -23,6 +23,11 @@ public class SpecificationController {
         return tbSpecificationService.findPage(page, size);
     }
 
+    @RequestMapping("/findOne/{id}")
+    public Specification findOne(@PathVariable("id") Long id) {
+        return tbSpecificationService.findOne(id);
+    }
+
     @RequestMapping("/add")
     public Result add(@RequestBody Specification specification) {
         try {
@@ -32,11 +37,6 @@ public class SpecificationController {
             e.printStackTrace();
             return new Result(false, "操作失败!");
         }
-    }
-
-    @RequestMapping("/edit/{id}")
-    public TbSpecification findOne(@PathVariable("id") Long id) {
-        return tbSpecificationService.findOne(id);
     }
 
     @RequestMapping("/delete/{ids}")

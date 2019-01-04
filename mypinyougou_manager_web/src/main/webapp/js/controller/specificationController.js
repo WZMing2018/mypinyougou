@@ -30,22 +30,21 @@ app.controller('specificationController', function ($scope, specificationService
         $scope.specification.optionList.splice(index, 1);
     };
 
-    // 新建
-    $scope.save = function () {
-        specificationService.save($scope.specification).success(function (res) {
-            if(res.success) {
-                //重新查询,刷界面
-                $scope.reloadList();
-            } else {
-                alert(res.message);
-            }
+    //修改(回显)
+    $scope.findOne = function (id) {
+        specificationService.findOne(id).success(function (res) {
+            $scope.specification = res;
         });
     };
 
-    //修改
-    $scope.edit = function (id) {
-        specificationService.edit(id).success(function (res) {
-            $scope.specification = res;
+    // 保存
+    $scope.save = function () {
+        specificationService.save($scope.specification).success(function (res) {
+            alert(res.message);
+            if(res.success) {
+                //重新查询,刷界面
+                $scope.reloadList();
+            }
         });
     };
 

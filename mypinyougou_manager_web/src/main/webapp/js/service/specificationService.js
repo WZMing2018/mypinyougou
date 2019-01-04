@@ -5,12 +5,12 @@ app.service('specificationService', function ($http) {
         return $http.get('../specification/findPage/' + page + '/' + size);
     };
 
-    this.save = function (specification) {
-        return $http.post('../specification/add', specification);
+    this.findOne = function (id) {
+        return $http.get('../specification/findOne/' + id);
     };
 
-    this.edit = function (id) {
-        return $http.get('../specification/edit/' + id);
+    this.save = function (specification) {
+        return $http.post('../specification/add', specification);
     };
 
     this.delete = function (selectIDs) {
