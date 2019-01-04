@@ -27,7 +27,8 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <configuration>
                     <!-- 指定端口 -->
-                    <port>8081</port>
+                    <!--端口号加100,java占用8081-->
+                    <port>8181</port>
                     <!-- 请求路径 -->
                     <path>/</path>
                 </configuration>

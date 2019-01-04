@@ -86,10 +86,20 @@ public class TbSpcificationServiceImpl implements TbSpecificationService {
 
     }
 
+    /**
+     * 规格删除
+     * @param ids
+     */
     @Override
     public void delete(Long[] ids) {
         for (Long id : ids) {
+            //删除规格主表
             tbSpecificationMapper.deleteByPrimaryKey(id);
+            //删除规格从表
+            TbSpecificationOptionExample example = new TbSpecificationOptionExample();
+            TbSpecificationOptionExample.Criteria criteria = example.createCriteria();
+            criteria.andSpecIdEqualTo(id);
+            tbSpecificationOptionMapper.deleteByExample(example);
         }
     }
 }
