@@ -11,12 +11,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/specification")
 public class SpecificationController {
 
     @Reference
     private TbSpecificationService tbSpecificationService;
+
+    @RequestMapping("/findAll")
+    public List<TbSpecification> findAll() {
+        return tbSpecificationService.findAll();
+    }
 
     @RequestMapping("/findPage/{page}/{size}")
     public PageResult<TbSpecification> findPage(@PathVariable("page") int page, @PathVariable("size") int size) {

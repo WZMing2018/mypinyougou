@@ -30,4 +30,9 @@ public class TbBrand implements Serializable{
     public void setFirstChar(String firstChar) {
         this.firstChar = firstChar;
     }
+
+    // 为了匹配select2的key: text
+    public String getText() {
+        return this.name;
+    }
 }

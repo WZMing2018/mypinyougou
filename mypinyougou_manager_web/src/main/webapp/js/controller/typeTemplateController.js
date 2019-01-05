@@ -1,5 +1,6 @@
  //控制层 
-app.controller('typeTemplateController' ,function($scope, $controller, typeTemplateService){
+app.controller('typeTemplateController' ,
+    function($scope, $controller, typeTemplateService, brandService, specificationService){
 	
 	$controller('baseController',{$scope:$scope});//继承
 	
@@ -41,11 +42,10 @@ app.controller('typeTemplateController' ,function($scope, $controller, typeTempl
 		}				
 		serviceObject.success(
 			function(response){
+                alert(response.message);
 				if(response.success){
 					//重新查询 
 		        	$scope.reloadList();//重新加载
-				}else{
-					alert(response.message);
 				}
 			}		
 		);				
@@ -76,5 +76,35 @@ app.controller('typeTemplateController' ,function($scope, $controller, typeTempl
 			}			
 		);
 	}
-    
+
+    $scope.brandList = {data: []};//data对应的数组中存放对象, 对象必须要有id和text字段
+    $scope.specList = {data: []};
+    $scope.entity = {customAttributeItems : []};
+
+	$scope.findBrandList = function () {
+        brandService.findAll().success(function (res) {
+            $scope.brandList.data = res;
+        });
+    }
+
+    $scope.findSpecList = function () {
+        specificationService.findAll().success(function (res) {
+            $scope.specList.data = res;
+        });
+    }
+
+    //增加一行
+    $scope.addRow = function () {
+        $scope.entity.customAttributeItems.push({});
+    }
+
+    //移除一行
+	$scope.removeRow = function (index) {
+        $scope.entity.customAttributeItems.splice(index, 1);
+    }
+
+    $scope.handleEdit = function () {
+        $scope.entity = {customAttributeItems : []};
+    }
+
 });	

@@ -22,4 +22,9 @@ public class TbSpecification implements Serializable {
     public void setSpecName(String specName) {
         this.specName = specName == null ? null : specName.trim();
     }
+
+    //为了匹配select2的key: text
+    public String getText() {
+        return this.specName;
+    }
 }

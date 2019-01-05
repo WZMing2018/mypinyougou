@@ -1,6 +1,10 @@
 //定义服务
 app.service('brandService', function ($http) {
 
+    this.findAll = function () {
+        return $http.get('../brand/findAll');
+    }
+
     this.findPage = function (page, size) {
         return $http.get('../brand/findPage/' + page + '/' + size);
     };
