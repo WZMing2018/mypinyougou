@@ -27,8 +27,12 @@ app.controller('typeTemplateController' ,
 	$scope.findOne=function(id){				
 		typeTemplateService.findOne(id).success(
 			function(response){
-				$scope.entity= response;					
-			}
+				$scope.entity= response;
+				//将String字符串转换成json对象
+                $scope.entity.brandIds = JSON.parse(response.brandIds);
+                $scope.entity.specIds = JSON.parse(response.specIds);
+                $scope.entity.customAttributeItems = JSON.parse(response.customAttributeItems);
+            }
 		);				
 	}
 	
@@ -55,11 +59,12 @@ app.controller('typeTemplateController' ,
 	//批量删除 
 	$scope.dele=function(){			
 		//获取选中的复选框			
-		typeTemplateService.dele( $scope.selectIds ).success(
+		typeTemplateService.dele( $scope.selectIDs ).success(
 			function(response){
+                alert(response.message);
 				if(response.success){
 					$scope.reloadList();//刷新列表
-					$scope.selectIds=[];
+					$scope.selectIDs=[];
 				}						
 			}		
 		);				
