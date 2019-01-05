@@ -6,7 +6,7 @@ import com.github.pagehelper.PageHelper;
 import com.mypinyougou.mapper.TbBrandMapper;
 import com.mypinyougou.pojo.TbBrand;
 import com.mypinyougou.sellergoods.service.TbBrandService;
-import com.mypinyougou.utils.PageResult;
+import com.mypinyougou.entity.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 

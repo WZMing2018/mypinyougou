@@ -1,4 +1,4 @@
-package com.mypinyougou.utils;
+package com.mypinyougou.entity;
 
 import java.io.Serializable;
 import java.util.List;

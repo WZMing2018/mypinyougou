@@ -4,7 +4,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.mypinyougou.entity.Result;
 import com.mypinyougou.pojo.TbSpecification;
 import com.mypinyougou.sellergoods.service.TbSpecificationService;
-import com.mypinyougou.utils.PageResult;
+import com.mypinyougou.entity.PageResult;
 import com.mypinyougou.vo.Specification;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;

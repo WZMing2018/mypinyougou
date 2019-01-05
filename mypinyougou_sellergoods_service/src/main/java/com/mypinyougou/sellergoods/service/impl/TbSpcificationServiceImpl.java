@@ -9,7 +9,7 @@ import com.mypinyougou.pojo.TbSpecification;
 import com.mypinyougou.pojo.TbSpecificationOption;
 import com.mypinyougou.pojo.TbSpecificationOptionExample;
 import com.mypinyougou.sellergoods.service.TbSpecificationService;
-import com.mypinyougou.utils.PageResult;
+import com.mypinyougou.entity.PageResult;
 import com.mypinyougou.vo.Specification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;

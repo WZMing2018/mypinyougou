@@ -30,4 +30,14 @@ app.controller('baseController', function ($scope) {
         }
     };
 
+    //定义jsonToString工具类
+    $scope.jsonToString = function (jsonStr, key) {
+        var jsonArr = JSON.parse(jsonStr);
+        var resultArr = new Array();
+        for (var i = 0; i < jsonArr.length; i++) {
+            resultArr.push(jsonArr[i][key]);
+        }
+        return resultArr.join(",");
+    };
+
 });
