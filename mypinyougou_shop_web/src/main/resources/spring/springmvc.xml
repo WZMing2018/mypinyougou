@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+    <!--springMvc-->
+    <!--1.扫描包:生成ioc容器-->
+    <!--不配置,默认扫描classes下所有包-->
+    <!--2.springMvc的三大组件:处理器映射器,处理器适配器,视图解析器-->
+    <!--2.1注解驱动支持-->
+    <mvc:annotation-driven>
+        <mvc:message-converters register-defaults="true">
+            <!--使用Alibaba的FastJson,比默认的jackson转换json更灵活-->
+            <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+                <property name="supportedMediaTypes" value="application/json"/>
+                <property name="features">
+                    <array>
+                        <value>WriteMapNullValue</value>
+                        <value>WriteDateUseDateFormat</value>
+                    </array>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!--3.放行静态资源:将静态资源交给服务器容器处理而不是springMvc的前段控制器-->
+    <mvc:default-servlet-handler/>
+
+    <!--整合dubbox框架,引入dubbox服务|-->
+    <dubbo:application name="mypinyougou-shop-web" />
+    <dubbo:registry address="zookeeper://192.168.25.130:2181"/>
+    <dubbo:annotation package="com.mypinyougou.shop.controller"/>
+
+</beans>

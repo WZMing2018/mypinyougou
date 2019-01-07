@@ -48,6 +48,8 @@ public class SellerServiceImpl implements SellerService {
 	 */
 	@Override
 	public void add(TbSeller seller) {
+		//新入驻商家状态为未审核:"0"
+		seller.setStatus("0");
 		sellerMapper.insert(seller);		
 	}
 
