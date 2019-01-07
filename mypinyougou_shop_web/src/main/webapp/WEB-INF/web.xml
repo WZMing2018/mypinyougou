@@ -3,6 +3,11 @@
         "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath*:spring/spring-security.xml</param-value>
+    </context-param>
+
     <!-- 解决post中文乱码 -->
     <filter>
         <filter-name>characterEncodingFilter</filter-name>
@@ -16,10 +21,25 @@
             <param-value>true</param-value>
         </init-param>
     </filter>
+    <!--SpringSecurity安全框架过滤器链-->
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+
     <filter-mapping>
         <filter-name>characterEncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!--监听器,加载SpringSecurity安全框架配置文件-->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
 
     <servlet>
         <servlet-name>springmvc</servlet-name>
