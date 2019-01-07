@@ -11,6 +11,7 @@ import com.mypinyougou.sellergoods.service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,8 +39,11 @@ public class SellerServiceImpl implements SellerService {
 	 */
 	@Override
 	public PageResult findPage(int pageNum, int pageSize) {
-		PageHelper.startPage(pageNum, pageSize);		
-		Page<TbSeller> page=   (Page<TbSeller>) sellerMapper.selectByExample(null);
+		PageHelper.startPage(pageNum, pageSize);
+		TbSellerExample example = new TbSellerExample();
+		TbSellerExample.Criteria criteria = example.createCriteria();
+		criteria.andStatusEqualTo("0");
+		Page<TbSeller> page=   (Page<TbSeller>) sellerMapper.selectByExample(example);
 		return new PageResult(page.getTotal(), page.getResult());
 	}
 
@@ -50,6 +54,8 @@ public class SellerServiceImpl implements SellerService {
 	public void add(TbSeller seller) {
 		//新入驻商家状态为未审核:"0"
 		seller.setStatus("0");
+		//商家创建时间
+		seller.setCreateTime(new Date());
 		sellerMapper.insert(seller);		
 	}
 
@@ -68,7 +74,7 @@ public class SellerServiceImpl implements SellerService {
 	 * @return
 	 */
 	@Override
-	public TbSeller findOne(Long id){
+	public TbSeller findOne(String id){
 		return sellerMapper.selectByPrimaryKey(id);//代码生成的对应接口中id原本为String类型
 	}
 
@@ -163,5 +169,10 @@ public class SellerServiceImpl implements SellerService {
 		Page<TbSeller> page= (Page<TbSeller>)sellerMapper.selectByExample(example);		
 		return new PageResult(page.getTotal(), page.getResult());
 	}
-	
+
+    @Override
+    public void updateStatus(String id, String status) {
+        sellerMapper.updateStatus(id, status);
+    }
+
 }

@@ -19,7 +19,7 @@ public interface TbSellerMapper {
 
     List<TbSeller> selectByExample(TbSellerExample example);
 
-    TbSeller selectByPrimaryKey(Long sellerId);
+    TbSeller selectByPrimaryKey(String sellerId);
 
     int updateByExampleSelective(@Param("record") TbSeller record, @Param("example") TbSellerExample example);
 
@@ -28,4 +28,7 @@ public interface TbSellerMapper {
     int updateByPrimaryKeySelective(TbSeller record);
 
     int updateByPrimaryKey(TbSeller record);
+
+    //自定义方法
+    void updateStatus(@Param("id") String id, @Param("status") String status);
 }

@@ -510,4 +510,9 @@
       bank_name = #{bankName,jdbcType=VARCHAR}
     where seller_id = #{sellerId,jdbcType=VARCHAR}
   </update>
+
+  <!--自定义-->
+  <update id="updateStatus" >
+      update tb_seller set status=#{status} where seller_id=#{id}
+  </update>
 </mapper>

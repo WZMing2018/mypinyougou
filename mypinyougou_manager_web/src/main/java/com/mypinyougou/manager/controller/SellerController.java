@@ -1,4 +1,4 @@
-package com.mypinyougou.shop.controller;
+package com.mypinyougou.manager.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.mypinyougou.entity.PageResult;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+
 /**
  * controller
  * @author Administrator
@@ -37,9 +38,9 @@ public class SellerController {
 	 * 返回全部列表
 	 * @return
 	 */
-	@RequestMapping("/findPage/{page}/{rows}")
-	public PageResult findPage(@PathVariable("page") int page, @PathVariable("rows")int rows){
-		return sellerService.findPage(page, rows);
+	@RequestMapping("/findPage/{page}/{size}")
+	public PageResult findPage(@PathVariable("page") int page, @PathVariable("size")int size){
+		return sellerService.findPage(page, size);
 	}
 	
 	/**
@@ -110,6 +111,17 @@ public class SellerController {
 	@RequestMapping("/search/{page}/{rows}")
 	public PageResult search(@RequestBody TbSeller seller, @PathVariable("page") int page,  @PathVariable("rows") int rows  ){
 		return sellerService.findPage(seller, page, rows);		
+	}
+
+	@RequestMapping("/updateStatus/{id}/{status}")
+	public Result updateStatus(@PathVariable("id") String id, @PathVariable("status") String status) {
+		try {
+			sellerService.updateStatus(id, status);
+			return new Result(true, "审核成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new Result(false, "审核失败");
+		}
 	}
 	
 }
