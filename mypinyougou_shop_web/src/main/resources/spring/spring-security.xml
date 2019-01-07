@@ -22,7 +22,8 @@
                              login-processing-url="/login"
                              default-target-url="/admin/index.html"
                              authentication-failure-url="/shoplogin.html"
-                             always-use-default-target="true"/>
+                             always-use-default-target="true"
+        />
 
         <!--关闭伪造跨域请求拦截-->
         <security:csrf disabled="true"/>
@@ -42,6 +43,8 @@
         </security:authentication-provider>
     </security:authentication-manager>
 
+    <!--自定义SpringSecurity认证成功处理类-->
+   <!-- <bean id="successHandler" class="com.mypinyougou.shop.customhandler.CustomAuthenticationSuccessHandler"/>-->
     <!--密码加密类-->
     <bean id="bCryptEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 

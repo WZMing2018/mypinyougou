@@ -2,12 +2,13 @@
 app.controller("loginController", function($scope,loginService) {
 	
 	//获取用户登录名
-	$scope.loadLoginName = function(){
+	$scope.loadLoginInfo = function(){
 		
 		//调用服务层方法
-		loginService.loadLoginName().success(
-				function(data){
-					$scope.loginName = data.loginName;
+		loginService.loadLoginInfo().success(
+				function(res){
+					$scope.loginName = res.loginName;
+					/*$scope.loginTime = res.loginTime;*/
 				}
 		);
 		
