@@ -56,7 +56,7 @@ public class SellerServiceImpl implements SellerService {
 		seller.setStatus("0");
 		//商家创建时间
 		seller.setCreateTime(new Date());
-		sellerMapper.insert(seller);		
+		sellerMapper.insert(seller);
 	}
 
 	

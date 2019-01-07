@@ -37,8 +37,13 @@
     <!--配置认证管理器-->
     <security:authentication-manager>
         <!--使用自定义认证管理器-->
-        <security:authentication-provider user-service-ref="userService"/>
+        <security:authentication-provider user-service-ref="userService">
+            <security:password-encoder ref="bCryptEncoder"/>
+        </security:authentication-provider>
     </security:authentication-manager>
+
+    <!--密码加密类-->
+    <bean id="bCryptEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 
     <bean id="userService" class="com.mypinyougou.shop.service.UserDetailServiceImpl">
         <property name="sellerService" ref="sellerService"/>
