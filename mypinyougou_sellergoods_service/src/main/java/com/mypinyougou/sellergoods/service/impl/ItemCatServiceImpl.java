@@ -107,4 +107,12 @@ public class ItemCatServiceImpl implements ItemCatService {
 		return itemCatMapper.selectByExample(example);
 	}
 
+	@Override
+	public List<TbItemCat> findItemCatByParentId(Long parentId) {
+		TbItemCatExample example = new TbItemCatExample();
+		TbItemCatExample.Criteria criteria = example.createCriteria();
+		criteria.andParentIdEqualTo(parentId);
+		return itemCatMapper.selectByExample(example);
+	}
+
 }

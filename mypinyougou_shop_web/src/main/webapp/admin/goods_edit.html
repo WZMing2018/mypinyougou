@@ -20,14 +20,16 @@
 	<link rel="stylesheet" href="../plugins/kindeditor/themes/default/default.css" />
 	<script charset="utf-8" src="../plugins/kindeditor/kindeditor-min.js"></script>
 	<script charset="utf-8" src="../plugins/kindeditor/lang/zh_CN.js"></script>
-    
-    
-      
-    
-    
+	<script src="../plugins/angularjs/angular.min.js"></script>
+	<script src="../js/base.js"></script>
+	<script src="../js/service/goodsService.js"></script>
+	<script src="../js/service/itemCatService.js"></script>
+	<script src="../js/controller/baseController.js"></script>
+	<script src="../js/controller/goodsController.js"></script>
+
 </head>
 
-<body class="hold-transition skin-red sidebar-mini" >
+<body class="hold-transition skin-red sidebar-mini" ng-app="pyg" ng-controller="goodsController" ng-init="selectItemCat1List()">
 
             <!-- 正文区域 -->
             <section class="content">
@@ -68,17 +70,26 @@
 		                           	  	<table>
 		                           	  		<tr>
 		                           	  			<td>
-		                           	  				<select class="form-control" >														
+		                           	  				<select class="form-control"
+															ng-model="entity.tbGoods.category1Id"
+															ng-options="itemCat.id as itemCat.name for itemCat in itemCat1List">
+														<!--<option value="itemCat.id" ng-repeat="itemCat in itemCat1List">
+															{{itemCat.name}}
+														</option>-->
 		                           	  				</select>
 		                              			</td>
 		                              			<td>
-		                           	  				<select class="form-control select-sm" ></select>
+		                           	  				<select class="form-control select-sm"
+															ng-model="entity.tbGoods.category2Id"
+															ng-options="itemCat.id as itemCat.name for itemCat in itemCat2List"></select>
 		                              			</td>
 		                              			<td>
-		                           	  				<select class="form-control select-sm" ></select>
+		                           	  				<select class="form-control select-sm"
+															ng-model="entity.tbGoods.category3Id"
+															ng-options="itemCat.id as itemCat.name for itemCat in itemCat3List" ></select>
 		                              			</td>
 		                              			<td>
-		                           	  				模板ID:19
+		                           	  				模板ID:{{entity.tbGoods.typeTemplateId}}
 		                              			</td>
 		                           	  		</tr>
 		                           	  	</table>
