@@ -4,10 +4,13 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.mypinyougou.entity.PageResult;
+import com.mypinyougou.mapper.TbGoodsDescMapper;
 import com.mypinyougou.mapper.TbGoodsMapper;
 import com.mypinyougou.pojo.TbGoods;
+import com.mypinyougou.pojo.TbGoodsDesc;
 import com.mypinyougou.pojo.TbGoodsExample;
 import com.mypinyougou.sellergoods.service.GoodsService;
+import com.mypinyougou.vo.Goods;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +27,8 @@ public class GoodsServiceImpl implements GoodsService {
 
 	@Autowired
 	private TbGoodsMapper goodsMapper;
+	@Autowired
+	private TbGoodsDescMapper goodsDescMapper;
 	
 	/**
 	 * 查询全部
@@ -45,10 +50,21 @@ public class GoodsServiceImpl implements GoodsService {
 
 	/**
 	 * 增加
-	 */
+     * @param goods
+     */
 	@Override
-	public void add(TbGoods goods) {
-		goodsMapper.insert(goods);		
+	public void add(Goods goods) {
+
+		TbGoods tbGoods = goods.getTbGoods();
+		TbGoodsDesc tbGoodsDesc = goods.getTbGoodsDesc();
+
+		//设置商品默认状态 未审核:0
+		tbGoods.setAuditStatus("0");
+		goodsMapper.insert(tbGoods);
+
+		//关联GoodsId
+		tbGoodsDesc.setGoodsId(tbGoods.getId());
+		goodsDescMapper.insert(tbGoodsDesc);
 	}
 
 	

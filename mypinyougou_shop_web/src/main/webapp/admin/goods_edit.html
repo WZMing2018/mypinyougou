@@ -112,31 +112,31 @@
 		 							 
 								   <div class="col-md-2 title">副标题</div>
 		                           <div class="col-md-10 data">
-		                               <input type="text" class="form-control"   placeholder="副标题" value="">
+		                               <input type="text" class="form-control" ng-model="entity.tbGoods.caption"  placeholder="副标题" value="">
 		                           </div>
 		                           
 		                           <div class="col-md-2 title">价格</div>
 		                           <div class="col-md-10 data">
 		                           	   <div class="input-group">
 			                          	   <span class="input-group-addon">¥</span>
-			                               <input type="text" class="form-control"  placeholder="价格" value="">
+			                               <input type="text" class="form-control" ng-model="entity.tbGoods.price" placeholder="价格" value="">
 		                           	   </div>
 		                           </div>
-		                           <!--  
+
 		                           <div class="col-md-2 title editer">商品介绍</div>
                                    <div class="col-md-10 data editer">
                                        <textarea name="content" style="width:800px;height:400px;visibility:hidden;" ></textarea>
                                    </div>
-		                           -->
+
 		                           <div class="col-md-2 title rowHeight2x">包装列表</div>
 		                           <div class="col-md-10 data rowHeight2x">
 		                               
-		                           	<textarea rows="4"  class="form-control"   placeholder="包装列表"></textarea>
+		                           	<textarea rows="4"  class="form-control" ng-model="entity.tbGoodsDesc.packageList"  placeholder="包装列表"></textarea>
 		                           </div>
 		                           
 		                           <div class="col-md-2 title rowHeight2x">售后服务</div>
 		                           <div class="col-md-10 data rowHeight2x">
-		                               <textarea rows="4"  class="form-control"    placeholder="售后服务"></textarea>
+		                               <textarea rows="4"  class="form-control" ng-model="entity.tbGoodsDesc.saleService"  placeholder="售后服务"></textarea>
 		                           </div>                        
                                   
                                     
@@ -358,7 +358,7 @@
                  	
                    </div>
                   <div class="btn-toolbar list-toolbar">
-				      <button class="btn btn-primary" ><i class="fa fa-save"></i>保存</button>
+				      <button class="btn btn-primary" ng-click="save()" ><i class="fa fa-save"></i>保存</button>
 				      <button class="btn btn-default" >返回列表</button>
 				  </div>
 			

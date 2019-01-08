@@ -33,19 +33,31 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,itemC
 	
 	//保存 
 	$scope.save=function(){				
-		var serviceObject;//服务层对象  				
-		if($scope.entity.id!=null){//如果有ID
+		var serviceObject;//服务层对象
+        //获取富文本数据
+        $scope.entity.tbGoodsDesc.introduction = editor.html();
+		if($scope.entity.tbGoods.id != null){//如果有ID
 			serviceObject=goodsService.update( $scope.entity ); //修改  
 		}else{
-			serviceObject=goodsService.add( $scope.entity  );//增加 
+			serviceObject=goodsService.add( $scope.entity  );//增加
 		}				
 		serviceObject.success(
 			function(response){
+                alert(response.message);
 				if(response.success){
-					//重新查询 
-		        	$scope.reloadList();//重新加载
-				}else{
-					alert(response.message);
+					//清空数据
+                    //复合类数据
+                    $scope.entity = {tbGoods:{}, tbGoodsDesc:{}, tbItems:[]};
+                    //一级分类下拉单选输入框
+                    $scope.itemCat1List = [];
+                    //二级分类下拉单选输入框
+                    $scope.itemCat2List = [];
+                    //三级分类下拉单选输入框
+                    $scope.itemCat3List = [];
+                    //品牌下拉单选输入框
+                    $scope.typeTemplate.brandIds = [];
+                    //富文本输入框
+                    editor.html('');
 				}
 			}		
 		);				
@@ -77,12 +89,16 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,itemC
 		);
 	}
 
+    $scope.itemCat1List = [];
+
 	//查询商品一级分类列表
 	$scope.selectItemCat1List = function () {
         itemCatService.findItemCatByParentId(0).success(function (res) {
         	$scope.itemCat1List = res;
         });
     }
+
+    $scope.itemCat2List = [];
 
     //监控entity.tbGoods.category1Id值的变化
     $scope.$watch('entity.tbGoods.category1Id', function (newValue, oldValue) {
@@ -96,6 +112,8 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,itemC
             });
         }
     })
+
+    $scope.itemCat3List = [];
 
     //监控entity.tbGoods.category2Id值的变化
     $scope.$watch('entity.tbGoods.category2Id', function (newValue, oldValue) {
@@ -117,6 +135,8 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,itemC
             });
         }
     })
+
+    $scope.typeTemplate = {brandIds:[]};
 
     //监控entity.tbGoods.typeTemplateId值的变化
     $scope.$watch('entity.tbGoods.typeTemplateId', function (newValue, oldValue) {
