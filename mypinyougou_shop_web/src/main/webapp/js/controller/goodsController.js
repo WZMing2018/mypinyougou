@@ -92,6 +92,7 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,itemC
                 //注意entity.tbGoods.category1Id值变化时,必须初始化以下值
                 $scope.itemCat3List = [];
                 $scope.entity.tbGoods.typeTemplateId = '';
+                $scope.typeTemplate.brandIds = [];
             });
         }
     })
@@ -103,6 +104,7 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,itemC
                 $scope.itemCat3List = res;
                 //注意entity.tbGoods.category2Id值变化时,必须初始化以下值
                 $scope.entity.tbGoods.typeTemplateId = '';
+                $scope.typeTemplate.brandIds = [];
             });
         }
     })
