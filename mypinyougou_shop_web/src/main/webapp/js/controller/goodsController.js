@@ -1,5 +1,6 @@
  //控制层 
-app.controller('goodsController' ,function($scope,$controller,goodsService,itemCatService,typeTemplateService){
+app.controller('goodsController' ,
+	function($scope,$controller,goodsService,itemCatService,typeTemplateService,uploadService){
 	
 	$controller('baseController',{$scope:$scope});//继承
 	
@@ -147,5 +148,17 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,itemC
             });
         }
     })
+
+    $scope.image = {url: '', color: ''};
+	//图片上传
+	$scope.uploadFile = function () {
+        uploadService.uploadFile().success(function (res) {
+            if (res.success) {
+                $scope.image.url = res.message;
+            } else {
+                alert(res.message);
+            }
+        });
+    }
     
 });	
