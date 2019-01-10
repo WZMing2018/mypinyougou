@@ -160,5 +160,16 @@ app.controller('goodsController' ,
             }
         });
     }
-    
+
+    //初始化页面复合类对象
+    $scope.entity = {tbGoods:{}, tbGoodsDesc:{itemImages:[]}, tbItems:[]}
+
+    //向$scope.entity.tbGoodsDesc.itemImages数组中添加一个对象
+	$scope.addImage = function () {
+        $scope.entity.tbGoodsDesc.itemImages.push($scope.image);
+    }
+
+    $scope.removeImage = function (index) {
+        $scope.entity.tbGoodsDesc.itemImages.splice(index, 1);
+    }
 });	
