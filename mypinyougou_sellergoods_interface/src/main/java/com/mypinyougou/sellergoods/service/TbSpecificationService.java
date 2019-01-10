@@ -5,6 +5,7 @@ import com.mypinyougou.entity.PageResult;
 import com.mypinyougou.vo.Specification;
 
 import java.util.List;
+import java.util.Map;
 
 public interface TbSpecificationService {
     public List<TbSpecification> findAll();
@@ -16,4 +17,6 @@ public interface TbSpecificationService {
     Specification findOne(Long id);
 
     void delete(Long[] ids);
+
+    List<Map> findSpecAndOption(Long typeId);
 }

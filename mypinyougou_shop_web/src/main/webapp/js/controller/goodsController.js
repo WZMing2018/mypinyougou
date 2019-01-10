@@ -1,6 +1,6 @@
  //控制层 
 app.controller('goodsController' ,
-	function($scope,$controller,goodsService,itemCatService,typeTemplateService,uploadService){
+	function($scope,$controller,goodsService,itemCatService,typeTemplateService,uploadService,specificationService){
 	
 	$controller('baseController',{$scope:$scope});//继承
 
@@ -9,7 +9,8 @@ app.controller('goodsController' ,
         tbGoods: {},
         tbGoodsDesc: {
             itemImages: [],
-            customAttributeItems:[]
+            customAttributeItems:[],
+            specificationItems:[]
         },
         tbItems: []
     };
@@ -148,6 +149,7 @@ app.controller('goodsController' ,
     })
 
     $scope.typeTemplate = {brandIds:[]};
+    $scope.specList = [];
 
     //监控entity.tbGoods.typeTemplateId值的变化
     $scope.$watch('entity.tbGoods.typeTemplateId', function (newValue, oldValue) {
@@ -156,6 +158,10 @@ app.controller('goodsController' ,
                 $scope.typeTemplate = res;
                 $scope.typeTemplate.brandIds = JSON.parse($scope.typeTemplate.brandIds);
                 $scope.entity.tbGoodsDesc.customAttributeItems = JSON.parse($scope.typeTemplate.customAttributeItems);
+            });
+
+            specificationService.findSpecAndOption(newValue).success(function (res) {
+                $scope.specList = res;
             });
         }
     })
