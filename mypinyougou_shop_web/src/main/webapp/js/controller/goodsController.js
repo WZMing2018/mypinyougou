@@ -3,8 +3,18 @@ app.controller('goodsController' ,
 	function($scope,$controller,goodsService,itemCatService,typeTemplateService,uploadService){
 	
 	$controller('baseController',{$scope:$scope});//继承
-	
-    //读取列表数据绑定到表单中  
+
+	//初始化页面复合类对象
+    $scope.entity = {
+        tbGoods: {},
+        tbGoodsDesc: {
+            itemImages: [],
+            customAttributeItems:[]
+        },
+        tbItems: []
+    };
+
+    //读取列表数据绑定到表单中
 	$scope.findAll=function(){
 		goodsService.findAll().success(
 			function(response){
@@ -145,6 +155,7 @@ app.controller('goodsController' ,
             typeTemplateService.findOne(newValue).success(function (res) {
                 $scope.typeTemplate = res;
                 $scope.typeTemplate.brandIds = JSON.parse($scope.typeTemplate.brandIds);
+                $scope.entity.tbGoodsDesc.customAttributeItems = JSON.parse($scope.typeTemplate.customAttributeItems);
             });
         }
     })
@@ -160,9 +171,6 @@ app.controller('goodsController' ,
             }
         });
     }
-
-    //初始化页面复合类对象
-    $scope.entity = {tbGoods:{}, tbGoodsDesc:{itemImages:[]}, tbItems:[]}
 
     //向$scope.entity.tbGoodsDesc.itemImages数组中添加一个对象
 	$scope.addImage = function () {
