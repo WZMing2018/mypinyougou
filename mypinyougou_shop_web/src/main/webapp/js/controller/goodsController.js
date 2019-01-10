@@ -186,4 +186,30 @@ app.controller('goodsController' ,
     $scope.removeImage = function (index) {
         $scope.entity.tbGoodsDesc.itemImages.splice(index, 1);
     }
+
+    //{"attributeName":"网络制式","attributeValue":["移动3G","移动4G"]}
+    $scope.spec = {attributeName:'', attributeValue:[]};
+	//$scope.entity.tbGoodsDesc.specificationItems
+    $scope.updateSpec = function ($event, specName, optionName) {
+        //$scope.entity.tbGoodsDesc.specificationItems数组中是否已存在$scope.spec对象
+        var spec = $scope.searchObjectByKey($scope.entity.tbGoodsDesc.specificationItems, 'attributeName', specName);
+        if ($event.target.checked) {//选中
+            if (spec!=null) {//数组中已存在该规格对象
+                spec.attributeValue.push(optionName);
+            } else {//数组中不存在该规格对象
+                $scope.entity.tbGoodsDesc.specificationItems.push({attributeName:specName, attributeValue:[optionName]});
+            }
+        } else {//未选中
+            var index = spec.attributeValue.indexOf(optionName);
+            spec.attributeValue.splice(index, 1);
+            //判断$scope.spec.attributeValue数组是否为空
+            if (spec.attributeValue.length <= 0) {
+                index = $scope.entity.tbGoodsDesc.specificationItems.indexOf(spec);
+                $scope.entity.tbGoodsDesc.specificationItems.splice(index, 1);
+            }
+        }
+        alert(JSON.stringify($scope.entity.tbGoodsDesc.specificationItems));
+    }
+
+
 });	

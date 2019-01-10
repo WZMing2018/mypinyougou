@@ -52,4 +52,14 @@ app.controller("baseController",function($scope){
 		return value;
 	};
 
+	//在数组中通过key查找对象
+    $scope.searchObjectByKey = function (list, key, value) {
+		for (var i=0; i<list.length; i++) {
+			if (list[i][key]==value) {
+                return list[i];
+            }
+        }
+        return null;
+    }
+
 });
