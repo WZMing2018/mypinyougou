@@ -12,7 +12,7 @@ app.controller('goodsController' ,
             customAttributeItems:[],
             specificationItems:[]
         },
-        tbItems: []
+        tbItems: [{spec:{}, price:0, num:99999, status:'0', isDefault:'0'}] //默认SKU列表中初始化一个对象
     };
 
     //读取列表数据绑定到表单中
@@ -188,8 +188,10 @@ app.controller('goodsController' ,
     }
 
     //{"attributeName":"网络制式","attributeValue":["移动3G","移动4G"]}
+    //存入$scope.entity.tbGoodsDesc.specificationItems数组中
     $scope.spec = {attributeName:'', attributeValue:[]};
-	//$scope.entity.tbGoodsDesc.specificationItems
+
+	//更新商品规格
     $scope.updateSpec = function ($event, specName, optionName) {
         //$scope.entity.tbGoodsDesc.specificationItems数组中是否已存在$scope.spec对象
         var spec = $scope.searchObjectByKey($scope.entity.tbGoodsDesc.specificationItems, 'attributeName', specName);
@@ -208,8 +210,34 @@ app.controller('goodsController' ,
                 $scope.entity.tbGoodsDesc.specificationItems.splice(index, 1);
             }
         }
-        alert(JSON.stringify($scope.entity.tbGoodsDesc.specificationItems));
     }
 
+    //生成SKU列表
+    $scope.createItemList = function () {
+        //每次点击都重新生产SKU列表
+        $scope.entity.tbItems = [{spec:{}, price:0, num:99999, status:'0', isDefault:'0'}];
+        //拿到该商品最新的规格
+        //[{"attributeName":"网络制式","attributeValue":["移动3G","移动4G"]},{"attributeName":"屏幕尺寸","attributeValue":["6寸","5寸"]}]
+        var specs = $scope.entity.tbGoodsDesc.specificationItems;
+        for(var i=0; i<specs.length; i++) {
+            $scope.entity.tbItems =
+                $scope.addColumn($scope.entity.tbItems, specs[i]['attributeName'], specs[i]['attributeValue']);
+        }
+        // alert(JSON.stringify($scope.entity.tbItems));
+    }
+
+    //增加列
+    $scope.addColumn = function (list, specName, optionName) {
+        var newItemList = [];
+        for (var i=0; i<list.length; i++) {
+            var oldItem = list[i];
+            for (var j=0; j<optionName.length; j++) {
+                var newItem = JSON.parse(JSON.stringify(oldItem)); // 深克隆,拿到一份模板
+                newItem.spec[specName] = optionName[j];
+                newItemList.push(newItem);
+            }
+        }
+        return newItemList;
+    }
 
 });	
