@@ -15,6 +15,18 @@ app.controller('goodsController' ,
         tbItems: [{spec:{}, price:0, num:99999, status:'0', isDefault:'0'}] //默认SKU列表中初始化一个对象
     };
 
+    //初始化数据
+    $scope.itemCat1List = [];
+    $scope.itemCat2List = [];
+    $scope.itemCat3List = [];
+    $scope.typeTemplate = {brandIds:[]};
+    $scope.specList = [];
+    $scope.image = {url: '', color: ''};
+    //{"attributeName":"网络制式","attributeValue":["移动3G","移动4G"]}
+    // 存入$scope.entity.tbGoodsDesc.specificationItems数组中
+    $scope.spec = {attributeName:'', attributeValue:[]};
+
+
     //读取列表数据绑定到表单中
 	$scope.findAll=function(){
 		goodsService.findAll().success(
@@ -59,7 +71,15 @@ app.controller('goodsController' ,
 				if(response.success){
 					//清空数据
                     //复合类数据
-                    $scope.entity = {tbGoods:{}, tbGoodsDesc:{}, tbItems:[]};
+                    $scope.entity = {
+                        tbGoods: {},
+                        tbGoodsDesc: {
+                            itemImages: [],
+                            customAttributeItems:[],
+                            specificationItems:[]
+                        },
+                        tbItems: [{spec:{}, price:0, num:99999, status:'0', isDefault:'0'}] //默认SKU列表中初始化一个对象
+                    };
                     //一级分类下拉单选输入框
                     $scope.itemCat1List = [];
                     //二级分类下拉单选输入框
@@ -70,6 +90,8 @@ app.controller('goodsController' ,
                     $scope.typeTemplate.brandIds = [];
                     //富文本输入框
                     editor.html('');
+                    //规格列表
+                    $scope.specList = [];
 				}
 			}		
 		);				
@@ -101,16 +123,12 @@ app.controller('goodsController' ,
 		);
 	}
 
-    $scope.itemCat1List = [];
-
 	//查询商品一级分类列表
 	$scope.selectItemCat1List = function () {
         itemCatService.findItemCatByParentId(0).success(function (res) {
         	$scope.itemCat1List = res;
         });
     }
-
-    $scope.itemCat2List = [];
 
     //监控entity.tbGoods.category1Id值的变化
     $scope.$watch('entity.tbGoods.category1Id', function (newValue, oldValue) {
@@ -124,8 +142,6 @@ app.controller('goodsController' ,
             });
         }
     })
-
-    $scope.itemCat3List = [];
 
     //监控entity.tbGoods.category2Id值的变化
     $scope.$watch('entity.tbGoods.category2Id', function (newValue, oldValue) {
@@ -148,9 +164,6 @@ app.controller('goodsController' ,
         }
     })
 
-    $scope.typeTemplate = {brandIds:[]};
-    $scope.specList = [];
-
     //监控entity.tbGoods.typeTemplateId值的变化
     $scope.$watch('entity.tbGoods.typeTemplateId', function (newValue, oldValue) {
         if (newValue != '' && newValue != undefined) {
@@ -166,7 +179,6 @@ app.controller('goodsController' ,
         }
     })
 
-    $scope.image = {url: '', color: ''};
 	//图片上传
 	$scope.uploadFile = function () {
         uploadService.uploadFile().success(function (res) {
@@ -186,10 +198,6 @@ app.controller('goodsController' ,
     $scope.removeImage = function (index) {
         $scope.entity.tbGoodsDesc.itemImages.splice(index, 1);
     }
-
-    //{"attributeName":"网络制式","attributeValue":["移动3G","移动4G"]}
-    //存入$scope.entity.tbGoodsDesc.specificationItems数组中
-    $scope.spec = {attributeName:'', attributeValue:[]};
 
 	//更新商品规格
     $scope.updateSpec = function ($event, specName, optionName) {
