@@ -41,7 +41,10 @@ public class GoodsController {
 	 */
 	@RequestMapping("/findPage/{page}/{rows}")
 	public PageResult findPage(@PathVariable("page") int page, @PathVariable("rows")int rows){
-		return goodsService.findPage(page, rows);
+		TbGoods tbGoods = new TbGoods();
+		String sellerId = SecurityContextHolder.getContext().getAuthentication().getName();
+		tbGoods.setSellerId(sellerId);
+		return goodsService.findPage(tbGoods, page, rows);
 	}
 	
 	/**

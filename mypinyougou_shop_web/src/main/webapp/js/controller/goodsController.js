@@ -26,6 +26,17 @@ app.controller('goodsController' ,
     // 存入$scope.entity.tbGoodsDesc.specificationItems数组中
     $scope.spec = {attributeName:'', attributeValue:[]};
 
+    //翻译数组
+    $scope.auditStatus = ['未审核','已审核','审核未通过','关闭'];
+    $scope.catList = [];
+    //查询分类列表初始化翻译数组
+    $scope.findCatList = function () {
+        itemCatService.findAll().success(function (res) {
+            for (var i=0; i<res.length; i++) {
+                $scope.catList[res[i]['id']] = res[i]['name'];
+            }
+        });
+    }
 
     //读取列表数据绑定到表单中
 	$scope.findAll=function(){
