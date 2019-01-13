@@ -2,7 +2,6 @@ package com.mypinyougou.sellergoods.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.mypinyougou.entity.PageResult;
@@ -154,8 +153,21 @@ public class GoodsServiceImpl implements GoodsService {
 	 * @return
 	 */
 	@Override
-	public TbGoods findOne(Long id){
-		return goodsMapper.selectByPrimaryKey(id);
+	public Goods findOne(Long id){
+
+		TbGoods tbGoods = goodsMapper.selectByPrimaryKey(id);
+		TbGoodsDesc tbGoodsDesc = goodsDescMapper.selectByPrimaryKey(id);
+
+		TbItemExample example = new TbItemExample();
+		TbItemExample.Criteria criteria = example.createCriteria();
+		criteria.andGoodsIdEqualTo(id);
+		List<TbItem> tbItems = itemMapper.selectByExample(example);
+
+		Goods goods = new Goods();
+		goods.setTbGoods(tbGoods);
+		goods.setTbGoodsDesc(tbGoodsDesc);
+		goods.setTbItems(tbItems);
+		return goods;
 	}
 
 	/**

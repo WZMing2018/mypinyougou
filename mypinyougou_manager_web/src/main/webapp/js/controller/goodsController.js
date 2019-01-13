@@ -1,6 +1,6 @@
  //控制层 
 app.controller('goodsController' ,
-	function($scope,$controller,goodsService,itemCatService){
+	function($scope,$controller,goodsService,itemCatService,brandService){
 	
 	$controller('baseController',{$scope:$scope});//继承
 
@@ -29,11 +29,22 @@ app.controller('goodsController' ,
     //翻译数组
     $scope.auditStatus = ['未审核','已审核','审核未通过','关闭'];
     $scope.catList = [];
+    $scope.brandList = [];
+    $scope.status = ['否', '是'];
     //查询分类列表初始化翻译数组
     $scope.findCatList = function () {
         itemCatService.findAll().success(function (res) {
             for (var i=0; i<res.length; i++) {
                 $scope.catList[res[i]['id']] = res[i]['name'];
+            }
+        });
+    }
+
+    //查询品牌列表初始化翻译数组
+    $scope.findBrand = function () {
+        brandService.findAll().success(function (res) {
+            for (var i=0; i<res.length; i++) {
+                $scope.brandList[res[i]['id']] = res[i]['name'];
             }
         });
     }
@@ -61,7 +72,14 @@ app.controller('goodsController' ,
 	$scope.findOne=function(id){				
 		goodsService.findOne(id).success(
 			function(response){
-				$scope.entity= response;					
+				$scope.entity= response;
+				$scope.entity.tbGoodsDesc.itemImages = JSON.parse($scope.entity.tbGoodsDesc.itemImages);
+				$scope.entity.tbGoodsDesc.customAttributeItems = JSON.parse($scope.entity.tbGoodsDesc.customAttributeItems);
+				$scope.entity.tbGoodsDesc.specificationItems = JSON.parse($scope.entity.tbGoodsDesc.specificationItems);
+                for (var i=0; i<$scope.entity.tbItems.length; i++) {
+                    $scope.entity.tbItems[i].spec = JSON.parse($scope.entity.tbItems[i].spec);
+                }
+
 			}
 		);				
 	}
