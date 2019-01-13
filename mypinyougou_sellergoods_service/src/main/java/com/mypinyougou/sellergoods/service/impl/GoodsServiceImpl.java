@@ -66,7 +66,6 @@ public class GoodsServiceImpl implements GoodsService {
 
 		TbGoods tbGoods = goods.getTbGoods();
 		TbGoodsDesc tbGoodsDesc = goods.getTbGoodsDesc();
-		List<TbItem> tbItems = goods.getTbItems();
 
 		//设置商品默认状态 未审核:0
 		tbGoods.setAuditStatus("0");
@@ -77,44 +76,70 @@ public class GoodsServiceImpl implements GoodsService {
 		goodsDescMapper.insert(tbGoodsDesc);
 
 		//添加SKU
-		for (TbItem tbItem : tbItems) {
+		if ("1".equals(tbGoods.getIsEnableSpec())) {//启用规格
+			for (TbItem tbItem : goods.getTbItems()) {
+				//标题
+				String tile = tbGoods.getGoodsName();
+				Map<String,Object> specMap  = JSON.parseObject(tbItem.getSpec());
+				for (String key : specMap.keySet()) {
+					tile += " " + specMap.get(key);
+				}
+				tbItem.setTitle(tile);
+				//设置其他字段的值
+				setItemValues(tbGoods, tbGoodsDesc, tbItem);
+				//保存到数据库
+				itemMapper.insert(tbItem);
+			}
+		} else {
+			TbItem tbItem = new TbItem();
+			tbItem.setPrice(tbGoods.getPrice());
+			tbItem.setNum(99999);
+			tbItem.setStatus("1");
+			tbItem.setIsDefault("1");
+			tbItem.setSpec("{}");
 			//标题
-			String tile = tbGoods.getGoodsName();
-			Map<String,Object> specMap  = JSON.parseObject(tbItem.getSpec());
-			for (String key : specMap.keySet()) {
-				tile += " " + specMap.get(key);
-			}
-			tbItem.setTitle(tile);
-			//商品 SPU 编号
-			tbItem.setGoodsId(tbGoods.getId());
-			//商家编号
-			tbItem.setSellerId(tbGoods.getSellerId());
-			//商品分类编号（3 级）
-			tbItem.setCategoryid(tbGoods.getCategory3Id());
-			//创建日期
-			tbItem.setCreateTime(new Date());
-			//修改日期
-			tbItem.setUpdateTime(new Date());
-			//品牌名称
-			TbBrand tbBrand = brandMapper.selectByPrimaryKey(tbGoods.getBrandId());
-			tbItem.setBrand(tbBrand.getName());
-			//分类名称
-			TbItemCat tbItemCat = itemCatMapper.selectByPrimaryKey(tbItem.getCategoryid());
-			tbItem.setCategory(tbItemCat.getName());
-			//商家名称
-			TbSeller tbSeller = sellerMapper.selectByPrimaryKey(tbItem.getSellerId());
-			tbItem.setSeller(tbSeller.getNickName());
-			//图片地址（取 spu 的第一个图片）
-			List<Map> itemImageList = JSON.parseArray(tbGoodsDesc.getItemImages(), Map.class);
-			if (itemImageList.size() > 0) {
-				tbItem.setImage((String) itemImageList.get(0).get("url"));
-			}
+			tbItem.setTitle(tbGoods.getGoodsName());
+			//设置其他字段的值
+			setItemValues(tbGoods, tbGoodsDesc, tbItem);
 			//保存到数据库
 			itemMapper.insert(tbItem);
 		}
 	}
 
-	
+	/**
+	 * 设置其他字段的值
+	 * @param tbGoods
+	 * @param tbGoodsDesc
+	 * @param tbItem
+	 */
+	private void setItemValues(TbGoods tbGoods, TbGoodsDesc tbGoodsDesc, TbItem tbItem) {
+		//商品 SPU 编号
+		tbItem.setGoodsId(tbGoods.getId());
+		//商家编号
+		tbItem.setSellerId(tbGoods.getSellerId());
+		//商品分类编号（3 级）
+		tbItem.setCategoryid(tbGoods.getCategory3Id());
+		//创建日期
+		tbItem.setCreateTime(new Date());
+		//修改日期
+		tbItem.setUpdateTime(new Date());
+		//品牌名称
+		TbBrand tbBrand = brandMapper.selectByPrimaryKey(tbGoods.getBrandId());
+		tbItem.setBrand(tbBrand.getName());
+		//分类名称
+		TbItemCat tbItemCat = itemCatMapper.selectByPrimaryKey(tbItem.getCategoryid());
+		tbItem.setCategory(tbItemCat.getName());
+		//商家名称
+		TbSeller tbSeller = sellerMapper.selectByPrimaryKey(tbItem.getSellerId());
+		tbItem.setSeller(tbSeller.getNickName());
+		//图片地址（取 spu 的第一个图片）
+		List<Map> itemImageList = JSON.parseArray(tbGoodsDesc.getItemImages(), Map.class);
+		if (itemImageList.size() > 0) {
+            tbItem.setImage((String) itemImageList.get(0).get("url"));
+        }
+	}
+
+
 	/**
 	 * 修改
 	 */

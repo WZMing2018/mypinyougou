@@ -116,5 +116,6 @@ public class GoodsController {
 	public PageResult search(@RequestBody TbGoods goods, @PathVariable("page") int page,  @PathVariable("rows") int rows  ){
 		return goodsService.findPage(goods, page, rows);		
 	}
-	
+
+
 }

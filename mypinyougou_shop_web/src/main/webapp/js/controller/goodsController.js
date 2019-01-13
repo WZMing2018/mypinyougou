@@ -81,7 +81,7 @@ app.controller('goodsController' ,
                         tbItems: [{spec:{}, price:0, num:99999, status:'0', isDefault:'0'}] //默认SKU列表中初始化一个对象
                     };
                     //一级分类下拉单选输入框
-                    $scope.itemCat1List = [];
+                    // $scope.itemCat1List = [];
                     //二级分类下拉单选输入框
                     $scope.itemCat2List = [];
                     //三级分类下拉单选输入框
@@ -127,6 +127,7 @@ app.controller('goodsController' ,
 	$scope.selectItemCat1List = function () {
         itemCatService.findItemCatByParentId(0).success(function (res) {
         	$scope.itemCat1List = res;
+            $scope.entity.tbGoods.category1Id = '';
         });
     }
 
@@ -136,9 +137,17 @@ app.controller('goodsController' ,
             itemCatService.findItemCatByParentId(newValue).success(function (res) {
                 $scope.itemCat2List = res;
                 //注意entity.tbGoods.category1Id值变化时,必须初始化以下值
+                $scope.entity.tbGoods.category2Id = '';
                 $scope.itemCat3List = [];
                 $scope.entity.tbGoods.typeTemplateId = '';
+                //品牌
                 $scope.typeTemplate.brandIds = [];
+                //自定义属性
+                $scope.entity.tbGoodsDesc.customAttributeItems = [];
+                //初始化规格选项卡
+                $scope.specList = [];
+                $scope.entity.tbGoodsDesc.specificationItems = [];
+                $scope.entity.tbItems = [{spec:{}, price:0, num:99999, status:'0', isDefault:'0'}];
             });
         }
     })
@@ -149,8 +158,16 @@ app.controller('goodsController' ,
             itemCatService.findItemCatByParentId(newValue).success(function (res) {
                 $scope.itemCat3List = res;
                 //注意entity.tbGoods.category2Id值变化时,必须初始化以下值
+                $scope.entity.tbGoods.category3Id = '';
                 $scope.entity.tbGoods.typeTemplateId = '';
+                //品牌
                 $scope.typeTemplate.brandIds = [];
+                //自定义属性
+                $scope.entity.tbGoodsDesc.customAttributeItems = [];
+                //初始化规格选项卡
+                $scope.specList = [];
+                $scope.entity.tbGoodsDesc.specificationItems = [];
+                $scope.entity.tbItems = [{spec:{}, price:0, num:99999, status:'0', isDefault:'0'}];
             });
         }
     })
@@ -175,6 +192,9 @@ app.controller('goodsController' ,
 
             specificationService.findSpecAndOption(newValue).success(function (res) {
                 $scope.specList = res;
+                //初始化规格选项卡
+                $scope.entity.tbGoodsDesc.specificationItems = [];
+                $scope.entity.tbItems = [{spec:{}, price:0, num:99999, status:'0', isDefault:'0'}];
             });
         }
     })
@@ -246,6 +266,13 @@ app.controller('goodsController' ,
             }
         }
         return newItemList;
+    }
+
+    //初始化SpecListAndTbItems
+    $scope.initSpecItemsAndTbItems = function () {
+        // $scope.specList = [];
+        $scope.entity.tbGoodsDesc.specificationItems = [];
+        $scope.entity.tbItems = [{spec:{}, price:0, num:99999, status:'0', isDefault:'0'}];
     }
 
 });	

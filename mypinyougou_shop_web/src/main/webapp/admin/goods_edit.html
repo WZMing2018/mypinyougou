@@ -196,11 +196,14 @@
                             	<div class="row data-type">
 	                            	<div class="col-md-2 title">是否启用规格</div>
 			                        <div class="col-md-10 data">
-			                        	<input type="checkbox" >			                           
+			                        	<input type="checkbox"
+											   ng-model="entity.tbGoods.isEnableSpec"
+											   ng-true-value="1" ng-false-value="0"
+											   ng-click="initSpecItemsAndTbItems()">
 			                        </div>
                             	</div>
 
-                            	<div>
+                            	<div ng-if="entity.tbGoods.isEnableSpec==1">
                             	
 	                                <div class="row data-type">
 	                                
@@ -242,10 +245,10 @@
 										            	<input class="form-control" ng-model="item.num" placeholder="库存数量">
 										            </td>
 										            <td>
-										             	<input type="checkbox" ng-model="item.status">
+										             	<input type="checkbox" ng-model="item.status" ng-true-value="1" ng-false-value="0">
 										            </td>
 										            <td>
-										                <input type="checkbox" ng-model="item.isDefault">
+										                <input type="checkbox" ng-model="item.isDefault" ng-true-value="1" ng-false-value="0">
 										            </td>
 						                      </tr>
 
@@ -262,8 +265,7 @@
 						<!--表单内容/-->
 							 
                     </div>
-                 	
-                 	
+
                  	
                  	
                    </div>
