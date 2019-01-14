@@ -64,4 +64,6 @@ public interface GoodsService {
     void updateAuditStatus(long[] ids, String status);
 
     void updateDeleteStatus(Long[] ids);
+
+    void updateMarketableStatus(Long[] ids, String status);
 }

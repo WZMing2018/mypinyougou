@@ -132,5 +132,16 @@ public class GoodsController {
 		}
 	}
 
+	@RequestMapping("/updateMarketableStatus/{ids}/{status}")
+	public Result updateMarketableStatus(@PathVariable("ids") Long[] ids, @PathVariable("status") String status){
+		try {
+			goodsService.updateMarketableStatus(ids, status);
+			return new Result(true, "操作成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new Result(false, "操作失败");
+		}
+	}
+
 
 }

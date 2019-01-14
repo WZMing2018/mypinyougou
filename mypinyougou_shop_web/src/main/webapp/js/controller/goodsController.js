@@ -307,4 +307,17 @@ app.controller('goodsController',
                 }
             });
         }
+
+        //更新商品的上下架状态
+        $scope.updateMarketableStatus = function (status) {
+            goodsService.updateMarketableStatus($scope.selectIds, status).success(function (res) {
+                alert(res.message);
+                if (res.success) {
+                    $scope.reloadList();
+                    $scope.selectIDs = [];
+                }
+            });
+        }
+
+
     });

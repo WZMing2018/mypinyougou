@@ -39,4 +39,5 @@ app.service('goodsService',function($http){
     this.updateDeleteStatus = function (ids) {
         return $http.get('../goods/updateDeleteStatus/'+ids);
     }
+
 });
