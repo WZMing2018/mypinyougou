@@ -27,7 +27,7 @@ app.controller('goodsController' ,
     $scope.spec = {attributeName:'', attributeValue:[]};
 
     //翻译数组
-    $scope.auditStatus = ['未审核','已审核','审核未通过','关闭'];
+    $scope.auditStatus = ['未审核','审核通过','审核未通过','关闭'];
     $scope.catList = [];
     $scope.brandList = [];
     $scope.status = ['否', '是'];
@@ -304,4 +304,25 @@ app.controller('goodsController' ,
         $scope.entity.tbItems = [{spec:{}, price:0, num:99999, status:'0', isDefault:'0'}];
     }
 
+    //更新商品审核状态
+    $scope.updateAuditStatus = function (status) {
+        goodsService.updateAuditStatus($scope.selectIDs, status).success(function (res) {
+            alert(res.message);
+            if (res.success) {
+                $scope.reloadList();
+                $scope.selectIDs = [];
+            }
+        });
+    }
+
+    //更新商品的删除状态
+    $scope.updateDeleteStatus = function () {
+        goodsService.updateDeleteStatus($scope.selectIDs).success(function (res) {
+            alert(res.message);
+            if (res.success) {
+                $scope.reloadList();
+                $scope.selectIDs = [];
+            }
+        })
+    }
 });	

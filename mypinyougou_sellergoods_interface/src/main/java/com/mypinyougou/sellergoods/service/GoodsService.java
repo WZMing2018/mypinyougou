@@ -60,5 +60,8 @@ public interface GoodsService {
 	 * @return
 	 */
 	public PageResult findPage(TbGoods goods, int pageNum, int pageSize);
-	
+
+    void updateAuditStatus(long[] ids, String status);
+
+    void updateDeleteStatus(Long[] ids);
 }

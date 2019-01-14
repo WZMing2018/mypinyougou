@@ -34,19 +34,6 @@ public class GoodsController {
 		return goodsService.findAll();
 	}
 	
-	
-	/**
-	 * 返回全部列表
-	 * @return
-	 */
-	@RequestMapping("/findPage/{page}/{rows}")
-	public PageResult findPage(@PathVariable("page") int page, @PathVariable("rows")int rows){
-		TbGoods tbGoods = new TbGoods();
-		String sellerId = SecurityContextHolder.getContext().getAuthentication().getName();
-		tbGoods.setSellerId(sellerId);
-		return goodsService.findPage(tbGoods, page, rows);
-	}
-	
 	/**
 	 * 增加
 	 * @param goods
@@ -107,8 +94,20 @@ public class GoodsController {
 			return new Result(false, "删除失败");
 		}
 	}
+
+	/**
+	 * 返回全部列表
+	 * @return
+	 */
+	@RequestMapping("/findPage/{page}/{rows}")
+	public PageResult findPage(@PathVariable("page") int page, @PathVariable("rows")int rows){
+		TbGoods tbGoods = new TbGoods();
+		String sellerId = SecurityContextHolder.getContext().getAuthentication().getName();
+		tbGoods.setSellerId(sellerId);
+		return goodsService.findPage(tbGoods, page, rows);
+	}
 	
-		/**
+	/**
 	 * 查询+分页
 	 * @param goods
 	 * @param page
@@ -117,7 +116,20 @@ public class GoodsController {
 	 */
 	@RequestMapping("/search/{page}/{rows}")
 	public PageResult search(@RequestBody TbGoods goods, @PathVariable("page") int page,  @PathVariable("rows") int rows  ){
+		String sellerId = SecurityContextHolder.getContext().getAuthentication().getName();
+		goods.setSellerId(sellerId);
 		return goodsService.findPage(goods, page, rows);		
+	}
+
+	@RequestMapping("/updateAuditStatus/{ids}/{status}")
+	public Result updateAuditStatus(@PathVariable("ids") long[] ids,  @PathVariable("status") String status){
+		try {
+			goodsService.updateAuditStatus(ids, status);
+			return new Result(true, "操作成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new Result(false, "操作失败");
+		}
 	}
 
 

@@ -120,5 +120,27 @@ public class GoodsController {
 		return goodsService.findPage(goods, page, rows);		
 	}
 
+	@RequestMapping("/updateAuditStatus/{ids}/{status}")
+	public Result updateAuditStatus(@PathVariable("ids") long[] ids,  @PathVariable("status") String status){
+		try {
+			goodsService.updateAuditStatus(ids, status);
+			return new Result(true, "操作成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new Result(false, "操作失败");
+		}
+	}
+
+    @RequestMapping("/updateDeleteStatus/{ids}")
+    public Result updateDeleteStatus(@PathVariable("ids") Long[] ids){
+        try {
+            goodsService.updateDeleteStatus(ids);
+            return new Result(true, "操作成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, "操作失败");
+        }
+    }
+
 
 }
