@@ -1,4 +1,4 @@
-package com.mypinyougou.sellergoods.service;
+package com.mypinyougou.content.service;
 
 import com.mypinyougou.entity.PageResult;
 import com.mypinyougou.pojo.TbContent;

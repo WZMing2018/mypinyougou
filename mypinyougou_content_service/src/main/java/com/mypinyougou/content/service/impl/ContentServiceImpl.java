@@ -1,13 +1,13 @@
-package com.mypinyougou.sellergoods.service.impl;
+package com.mypinyougou.content.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.mypinyougou.content.service.ContentService;
 import com.mypinyougou.entity.PageResult;
 import com.mypinyougou.mapper.TbContentMapper;
 import com.mypinyougou.pojo.TbContent;
 import com.mypinyougou.pojo.TbContentExample;
-import com.mypinyougou.sellergoods.service.ContentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 

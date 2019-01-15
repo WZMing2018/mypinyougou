@@ -16,6 +16,8 @@
         <module>mypinyougou_manager_web</module>
         <module>mypinyougou_shop_web</module>
         <module>mypinyougou_fdfs</module>
+        <module>mypinyougou_content_interface</module>
+        <module>mypinyougou_content_service</module>
     </modules>
     <packaging>pom</packaging>
 
