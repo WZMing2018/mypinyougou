@@ -14,10 +14,20 @@
     <link rel="stylesheet" href="../css/style.css">
 	<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
     <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../plugins/angularjs/angular.min.js"></script>
+	<link rel="stylesheet" href="../plugins/angularjs/pagination.css">
+	<script src="../plugins/angularjs/pagination.js"></script>
+	<script src="../js/base_pagination.js"></script>
+	<script src="../js/service/contentService.js"></script>
+	<script src="../js/service/contentCategoryService.js"></script>
+	<script src="../js/service/uploadService.js"></script>
+	<script src="../js/controller/baseController.js"></script>
+	<script src="../js/controller/contentController.js"></script>
     
 </head>
 
-<body class="hold-transition skin-red sidebar-mini">
+<body class="hold-transition skin-red sidebar-mini"
+	  ng-app="pyg" ng-controller="contentController" ng-init="findContentCategories();">
   <!-- .box-body -->
                 
                     <div class="box-header with-border">
@@ -33,7 +43,7 @@
                             <div class="pull-left">
                                 <div class="form-group form-inline">
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-default" title="新建" data-toggle="modal" data-target="#editModal" ><i class="fa fa-file-o"></i> 新建</button>
+                                        <button type="button" class="btn btn-default" title="新建" ng-click="entity={};" data-toggle="modal" data-target="#editModal" ><i class="fa fa-file-o"></i> 新建</button>
                                         <button type="button" class="btn btn-default" title="删除" ><i class="fa fa-trash-o"></i> 删除</button>
                                         <button type="button" class="btn btn-default" title="开启" onclick='confirm("你确认要开启吗？")'><i class="fa fa-check"></i> 开启</button>
                                         <button type="button" class="btn btn-default" title="屏蔽" onclick='confirm("你确认要屏蔽吗？")'><i class="fa fa-ban"></i> 屏蔽</button>
@@ -97,6 +107,7 @@
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 			<h3 id="myModalLabel">广告编辑</h3>
+			{{entity}}
 		</div>
 		<div class="modal-body">							
 			
@@ -104,21 +115,22 @@
 				<tr>
 		      		<td>广告分类</td>
 		      		<td>
-		      			<select class="form-control" >
+		      			<select class="form-control" ng-model="entity.categoryId"
+								ng-options="contentCategory.id as contentCategory.name for contentCategory in contentCategoryList">
 		                </select>
 		      		</td>
 		      	</tr>
 		      	<tr>
 		      		<td>标题</td>
-		      		<td><input  class="form-control" placeholder="标题" >  </td>
+		      		<td><input  class="form-control" placeholder="标题" ng-model="entity.title">  </td>
 		      	</tr>
 			    <tr>
 		      		<td>URL</td>
-		      		<td><input  class="form-control" placeholder="URL" >  </td>
+		      		<td><input  class="form-control" placeholder="URL" ng-model="entity.url">  </td>
 		      	</tr>	
 		      	<tr>
 		      		<td>排序</td>
-		      		<td><input  class="form-control" placeholder="排序" >  </td>
+		      		<td><input  class="form-control" placeholder="排序" ng-model="entity.sortOrder">  </td>
 		      	</tr>			      	
 		      	<tr>
 		      		<td>广告图片</td>
@@ -127,7 +139,7 @@
 							<tr>
 								<td>
 								<input type="file" id="file" />				                
-					                <button class="btn btn-primary" type="button" >
+					                <button class="btn btn-primary" type="button" ng-click="uploadFile();">
 				                   		上传
 					                </button>	
 					            </td>
@@ -141,14 +153,15 @@
 		      	<tr>
 		      		<td>是否有效</td>
 		      		<td>
-		      		   <input type="checkbox" class="icheckbox_square-blue" >
+		      		   <input type="checkbox" class="icheckbox_square-blue"
+							  ng-model="entity.status" ng-true-value="1" ng-false-value="0">
 		      		</td>
 		      	</tr>  	
 			 </table>				
 			
 		</div>
 		<div class="modal-footer">						
-			<button class="btn btn-success" data-dismiss="modal" aria-hidden="true">保存</button>
+			<button class="btn btn-success" data-dismiss="modal" aria-hidden="true" ng-click="save();">保存</button>
 			<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
 		</div>
 	  </div>
