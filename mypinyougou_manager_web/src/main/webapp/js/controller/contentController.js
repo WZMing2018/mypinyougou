@@ -16,7 +16,7 @@ app.controller('contentController' ,function($scope,$controller,contentService,c
 	$scope.findPage=function(page,rows){			
 		contentService.findPage(page,rows).success(
 			function(response){
-				$scope.list=response.rows;	
+				$scope.contentList=response.rows;
 				$scope.paginationConf.totalItems=response.total;//更新总记录数
 			}			
 		);
@@ -94,6 +94,10 @@ app.controller('contentController' ,function($scope,$controller,contentService,c
         });
     }
 
+    //翻译数组
+	$scope.status = ['无效', '有效'];
+    //广告列表
+	$scope.contentList = [];
     //广告分类列表
     $scope.contentCategoryList = [];
     //初始化TbContent对应的entity
