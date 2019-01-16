@@ -18,6 +18,7 @@
         <module>mypinyougou_fdfs</module>
         <module>mypinyougou_content_interface</module>
         <module>mypinyougou_content_service</module>
+        <module>mypinyougou_portal_web</module>
     </modules>
     <packaging>pom</packaging>
 
